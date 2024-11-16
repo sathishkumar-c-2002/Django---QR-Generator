@@ -1,33 +1,66 @@
-{% extends 'QRCodeApp/layouts/main.html'%}
+{% extends 'QRCodeApp/layouts/main.html' %}
 
 {% block title %}
 SATHISH QR CODE GENERATOR
-    {% endblock title %}
+{% endblock title %}
 
 {% block content %}
-<nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-      <form class="d-flex" method='get' action="{%url 'home' %}">
-        <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+<div class="container py-5">
+    <!-- Header Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold" style="color: #673ab7;">Sathish QR Code Generator</h1>
+        <p class="text-muted">Create and share stunning QR codes with ease!</p>
     </div>
-  </nav>
 
+    <!-- Search Bar Section -->
+    <div class="d-flex justify-content-center mb-5">
+        <form class="input-group shadow-lg" method="get" action="{% url 'home' %}" style="max-width: 600px;">
+            <input 
+                type="search" 
+                class="form-control rounded-start border-0" 
+                name="query" 
+                placeholder="Enter text or URL" 
+                aria-label="Search" 
+                style="box-shadow: none;">
+            <button class="btn" type="submit" style="background: linear-gradient(45deg, #ff6f61, #ffb74d); color: white;">
+                Generate
+            </button>
+        </form>
+    </div>
 
-  <div class="container mt-4">
-    <h2>Search Results</h2>
-    {% if query %}
-        <p>You searched for: <strong>{{ query }}</strong></p>
-        <div>
-            {% if results %}
-                <p>{{ results }}</p> <!-- Replace with actual results -->
-            {% else %}
-                <p>No results found.</p>
-            {% endif %}
+    <!-- Results Section -->
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-lg" style="border-radius: 12px; background: linear-gradient(135deg, #e3f2fd, #ede7f6);">
+                <div class="card-body text-center">
+                    {% if query %}
+                        <h5 class="card-title text-primary">Search Results</h5>
+                        <p class="text-dark">You searched for: <strong>{{ query }}</strong></p>
+                        {% if results %}
+                            <img src="{{ results }}" alt="QR Code" class="img-fluid border rounded mb-3" style="max-width: 200px; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);">
+                            <p class="text-success">Your QR Code is ready!</p>
+                        {% else %}
+                            <p class="text-danger">No results found. Try another search.</p>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-muted">Enter a query above to generate your QR Code.</p>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-    {% else %}
-        <p>No query provided.</p>
-    {% endif %}
+    </div>
+
+    <!-- Share Section -->
+    <div class="text-center mt-5">
+        <h4 class="fw-bold" style="color: #3f51b5;">Share Your QR Code</h4>
+        <div class="d-flex justify-content-center gap-4 mt-4">
+            <a href="https://www.facebook.com" class="btn px-4 py-2 shadow" target="_blank" style="background: linear-gradient(45deg, #3b5998, #8b9dc3); color: white; border-radius: 30px;">
+                <i class="bi bi-facebook me-2"></i>Facebook
+            </a>
+            <a href="https://www.youtube.com" class="btn px-4 py-2 shadow" target="_blank" style="background: linear-gradient(45deg, #c4302b, #ff4444); color: white; border-radius: 30px;">
+                <i class="bi bi-youtube me-2"></i>YouTube
+            </a>
+        </div>
+    </div>
 </div>
-    {% endblock content %}
+{% endblock content %}
